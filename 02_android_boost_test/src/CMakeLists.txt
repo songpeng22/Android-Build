@@ -32,6 +32,23 @@ SET ( PROJECT_NAME qtTest )
 # CMake include android
 include(../cmake/test.cmake)
 
+IF(NOT TARGET boost)
+    SET(BOOST_ROOT D:/Desktop/Android-Build/extern/boost/arm64-v8a)
+    #SET(BOOST_ROOT D:/Desktop/Android-Build/extern/boost_clang/arm64-v8a)
+    set(BOOST_INCLUDE_DIRS ${BOOST_ROOT}/include)
+    set(BOOST_LIBRARY_DIRS ${BOOST_ROOT}/lib)
+
+    ADD_LIBRARY(boost INTERFACE)
+    TARGET_INCLUDE_DIRECTORIES(boost
+        INTERFACE ${BOOST_INCLUDE_DIRS})
+
+    TARGET_LINK_LIBRARIES(boost INTERFACE
+        ${BOOST_LIBRARY_DIRS}/libboost_system.so
+        ${BOOST_LIBRARY_DIRS}/libboost_filesystem.so)
+    TARGET_COMPILE_DEFINITIONS(boost INTERFACE "-DBOOST_ALL_NO_LIB")
+ELSE()
+    MESSAGE("Hydra: use other boost")
+ENDIF()
 
 # make sure that the Android toolchain is used
 IF(NOT ANDROID)
@@ -55,7 +72,7 @@ INCLUDE_DIRECTORIES(
     C:/Android_NDK/android-ndk-r19c/sources/cxx-stl/llvm-libc++/include
     #C:/Android_NDK/android-ndk-r19c/sources/cxx-stl/llvm-libc++abi/include
     # boost
-    ../../extern/boost/arm64-v8a/include/
+    #../../extern/boost/arm64-v8a/include/
     #${QT_INCLUDES}
 )
 
@@ -68,7 +85,7 @@ link_directories(
     C:/Android_NDK/android-ndk-r19c/toolchains/llvm/prebuilt/windows/sysroot/usr/lib/aarch64-linux-android/21
     #C:/Android_NDK/android-ndk-r19c/platforms/android-21/arch-arm64/usr/lib/
     # boost
-    ../../extern/boost/arm64-v8a/lib/
+    #../../extern/boost/arm64-v8a/lib/
 )
 
 #project
@@ -94,12 +111,13 @@ set(PLIBS
     libstdc++.so
     #libGLESv2.so
     #libQt5QuickTemplates2.so
-    libboost_system.so
+    #libboost_system.so
 )
 
 # Must After add_executable
 target_link_libraries( ${PROJECT_NAME}
     ${PLIBS}
+    boost
     #${QT_LIBS}
 )
 

@@ -22,8 +22,9 @@ macro(test LIB_NAME)
         COMMAND pwd
         COMMAND adb push qtTest /data/bin
         COMMAND adb push ../libs/libc++_shared.so /data/bin
-        COMMAND adb push ../../extern/boost/arm64-v8a/lib/libboost_system.so /data/bin
-        COMMAND adb push ../../extern/boost/arm64-v8a/lib/libboost_system.so.1.67.0 /data/bin
+        COMMAND adb push ../../extern/boost/arm64-v8a/lib/. /data/bin
+        #COMMAND adb push ../../extern/boost/arm64-v8a/lib/libboost_system.so /data/bin
+        #COMMAND adb push ../../extern/boost/arm64-v8a/lib/libboost_system.so.1.67.0 /data/bin
 		COMMAND adb shell chmod +x /data/bin/qtTest
         COMMAND adb shell "export LD_LIBRARY_PATH=D_LIBRARY_PATH:/data/bin;/data/bin/qtTest"	
         COMMAND adb disconnect
