@@ -7,3 +7,6 @@
 [submodule "icu"]
 	path = icu
 	url = https://github.com/songpeng22/Android-build_icu.git
+[submodule "libxml2"]
+	path = libxml2
+	url = https://github.com/songpeng22/Android-build_libxml2.git
